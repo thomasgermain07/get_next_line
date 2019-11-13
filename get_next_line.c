@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomasgermain <thomasgermain@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:39 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/13 17:51:01 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/13 23:43:51 by thomasgerma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t			check_buffer(char *buffer)
+size_t			ft_check_buffer(char *buffer)
 {
 	size_t size;
 
@@ -21,63 +21,48 @@ size_t			check_buffer(char *buffer)
 	{
 		if (buffer[size] == '\n')
 			return (size);
+		if (buffer[size] == '\0')
+			return (-BUFFER_SIZE);
 		size++;
 	}
 	return (-1);
 }
 
-t_line		*ft_create_t_line(char *str)
+	int		create_line(char *buffer, t_line **chain)
 {
-	t_line		*line;
-
-	if (!(line = malloc(sizeof(t_line) * 1)))
-		return (NULL);
-	line->line = str;
-	line->next = NULL;
-	return (line);
-}
-
-void		create_line(char *buffer, t_line **list)
-{
-	static char		*str;
 	int				i;
-	int				count;
+	static char 	*str = NULL;
 
-	count = 0;
-	while (count < ft_strlen(buffer))
+	i = ft_check_buffer(buffer);
+	if (i >= 0)
 	{
-		i = check_buffer(buffer);
-		if (i == -1)
-		{
-			str = ft_strjoin(str, buffer, ft_strlen(buffer));
-			return ;
-		}
-		else
-		{
-			str = ft_strjoin(str, buffer, i);
-			while ((*list)->next)
-				(*list) = (*list)->next;
-			(*list)->next = ft_create_t_line(str);
-			count += i;
-			buffer += i;
-		}
+		printf("create_line i = %i\n", i);
+		ft_listadd_back(chain, ft_lstnew(ft_strjoin(str, buffer, i)));
+		printf("First done\n");
+		str = NULL;
+		return (1);
 	}
+	else if (i < 0 && i > BUFFER_SIZE)
+	{
+		str = ft_strjoin(str, buffer, ft_strlen(buffer));
+		return (0);
+	}
+	return (-1);
+
 }
 
 int				get_next_line(int fd, char **line)
 {
-	char		buffer[BUFFER_SIZE];
-	t_line		*list;
-	int			size;
+	char			buffer[BUFFER_SIZE];
+	static t_line	**chain;
+	int				size;
 
-	if (!(list = malloc(sizeof(t_line) * 1)))
-		return (-1);
-	list->next = NULL;
 	while ((size = read(fd, buffer, BUFFER_SIZE - 1)))
 	{
 		buffer[size] = '\0';
-		create_line(buffer, &list);
+		create_line(buffer, chain);
+		break;
 	}
-	(void)line;
+	*line = (*chain)->line;
 	return (0);
 }
