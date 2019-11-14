@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomasgermain <thomasgermain@student.42    +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:46:03 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/13 23:10:02 by thomasgerma      ###   ########.fr       */
+/*   Updated: 2019/11/14 11:40:48 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main()
 	}
 
 	get_next_line(fd, &line);
-	//printf("%s\n", line);
+	printf("%s\n", line);
 	// get_next_line(fd, &line);
 	// printf("%s\n", line);
 

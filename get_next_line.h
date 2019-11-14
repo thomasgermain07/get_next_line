@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomasgermain <thomasgermain@student.42    +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:31:10 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/13 23:11:12 by thomasgerma      ###   ########.fr       */
+/*   Updated: 2019/11/14 10:49:49 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

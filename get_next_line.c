@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomasgermain <thomasgermain@student.42    +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:39 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/13 23:43:51 by thomasgerma      ###   ########.fr       */
+/*   Updated: 2019/11/14 11:41:56 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ size_t			ft_check_buffer(char *buffer)
 	i = ft_check_buffer(buffer);
 	if (i >= 0)
 	{
-		printf("create_line i = %i\n", i);
 		ft_listadd_back(chain, ft_lstnew(ft_strjoin(str, buffer, i)));
-		printf("First done\n");
-		str = NULL;
 		return (1);
 	}
 	else if (i < 0 && i > BUFFER_SIZE)
@@ -48,15 +45,17 @@ size_t			ft_check_buffer(char *buffer)
 		return (0);
 	}
 	return (-1);
-
 }
 
 int				get_next_line(int fd, char **line)
 {
 	char			buffer[BUFFER_SIZE];
-	static t_line	**chain;
+	t_line			**chain;
 	int				size;
 
+	if (!(chain = malloc(sizeof(t_line *))))
+		return (-1);
+	*chain = NULL;
 	while ((size = read(fd, buffer, BUFFER_SIZE - 1)))
 	{
 		buffer[size] = '\0';

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomasgermain <thomasgermain@student.42    +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 11:34:48 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/13 23:44:59 by thomasgerma      ###   ########.fr       */
+/*   Updated: 2019/11/14 11:42:32 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ t_line		*ft_lstnew(char *str)
 		return (NULL);
 	line->line = temp;
 	line->next = NULL;
-	printf("%s\n", line->line);
 	return (line);
 }
 
@@ -96,7 +95,7 @@ char		*ft_strjoin(char *s1, char *s2, int size)
 		return (NULL);
 	if (s1)
 		ft_strlcpy(str, s1, s1len + 1);
-	ft_strlcpy(str + s1len, s2, size);
+	ft_strlcpy(str + s1len, s2, size + 1);
 	str[s1len + s2len] = '\0';
 	return (str);
 }
