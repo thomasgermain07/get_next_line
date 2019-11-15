@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:31:10 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/14 14:56:01 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/15 16:11:06 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 # include <stdlib.h>
 # include <string.h>
 
-# define BUFFER_SIZE 145
+# define BUFFER_SIZE 2
+# define NB_LINE 2
+# define I_LINE 1
 
 typedef struct		s_line
 {

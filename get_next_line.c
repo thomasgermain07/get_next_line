@@ -1,82 +1,84 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/13 10:34:39 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/14 16:59:17 by thgermai         ###   ########.fr       */
+/*   Created: 2019/11/15 09:50:56 by thgermai          #+#    #+#             */
+/*   Updated: 2019/11/15 16:10:41 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t			ft_check_buffer(char *buffer)
+// option == I_LINE : return the index of the \n
+// option == NB_LINE : return the nb of line
+int			ft_check_buffer(char *buffer, int option)
 {
-	size_t size;
+	int				size;
+	int				nb;
 
-	size = 0;
+	nb		= 0;
+	size	= 0;
 	while (buffer[size])
 	{
 		if (buffer[size] == '\n')
-			return (size);
+		{
+			if (option == I_LINE)
+				return (size);
+			else if (option == 2)
+				nb++;
+		}
 		if (buffer[size] == '\0')
 			return (-BUFFER_SIZE);
 		size++;
 	}
+	if (option == NB_LINE)
+		return (nb);
 	return (-1);
 }
 
-int			create_line(char *buffer, t_line **chain)
+int				ft_assigning(char *str, char **line)
 {
+	static int		last;
 	int				i;
-	static char 	*str;
+	int				current_nb_line;
 
-	printf("start str : %s -|\n", str);
-	i = ft_check_buffer(buffer);
-	if (i > 0)
+	i = 0;
+	current_nb_line = ft_check_buffer(str, NB_LINE);
+	if (current_nb_line <= last)
+		return (-1);
+	if (current_nb_line > last)
 	{
-		ft_listadd_back(chain, ft_lstnew(ft_strjoin(str, buffer, i)));
-		printf("line created\n");
-		create_line(buffer + i + 1, chain);
-		str = NULL;
+		while (i < last)
+		{
+			str = str + ft_check_buffer(str, I_LINE) + 1;
+			i++;
+		}
+		*line = ft_strjoin(*line, str, ft_check_buffer(str, I_LINE));
+		last++;
 		return (1);
 	}
-	else if (i <= 0 && i < BUFFER_SIZE)
-	{
-		str = ft_strjoin(str, buffer, ft_strlen(buffer));
-		printf("half str : %s -|\n", str);
-		return (0);
-	}
-	return (-1);
+	return (0);
 }
 
 int				get_next_line(int fd, char **line)
 {
 	char			buffer[BUFFER_SIZE];
-	t_line			**chain;
-	int				size;
+	int 			size;
+	static char			*str;
 
-	if (!(chain = malloc(sizeof(t_line *))))
+	*line	= NULL;
+	if (!BUFFER_SIZE)
 		return (-1);
-	*chain = NULL;
-	int count = 0;
-	while ((size = read(fd, buffer, BUFFER_SIZE - 1)) && count < 2)
+	while ((size = read(fd, buffer, BUFFER_SIZE - 1)))
 	{
 		buffer[size] = '\0';
-		create_line(buffer, chain);
-		printf("buffer reset\n\n");
-		count++;
+		str = ft_strjoin(str, buffer, size);
+		if (ft_assigning(str, line) == 1)
+			return (1);
 	}
-	if (*chain)
-	{
-		*line = (*chain)->line;
-		while (*chain)
-		{
-			printf("%s\n", (*chain)->line);
-			*chain = (*chain)->next;
-		}
-	}
-	return (0);
+	free(str);
+	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:46:03 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/14 16:50:47 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/15 16:09:24 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,28 @@ int		main()
 	char	*line;
 	char	file_name[] = "text_file.txt";
 
-	line = NULL;
 	if ((fd = open(file_name, O_RDONLY)) == -1)
 	{
 		printf("Open failed\n");
 		return (0);
 	}
 
+	printf("|---------------------------------------------------------|\n");
 	get_next_line(fd, &line);
-	//printf("%s\n", line);
-	// get_next_line(fd, &line);
-	// printf("%s\n", line);
+	printf("%s\n", line);
+	printf("|---------------------------------------------------------|\n");
+	get_next_line(fd, &line);
+	printf("%s\n", line);
+	printf("|---------------------------------------------------------|\n");
+	get_next_line(fd, &line);
+	printf("%s\n", line);
+	printf("|---------------------------------------------------------|\n");
+	get_next_line(fd, &line);
+	printf("%s\n", line);
+	printf("|---------------------------------------------------------|\n");
+	get_next_line(fd, &line);
+	printf("%s\n", line);
 
 	close (fd);
-
 	return (0);
 }

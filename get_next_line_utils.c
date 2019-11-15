@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 11:34:48 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/14 14:45:15 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/15 16:11:41 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,43 +49,13 @@ size_t		ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (i);
 }
 
-t_line		*ft_lstnew(char *str)
-{
-	t_line		*line;
-	char		*temp;
-
-	temp = ft_strjoin(NULL, str, ft_strlen(str));
-	if (!(line = malloc(sizeof(t_line) * 1)))
-		return (NULL);
-	line->line = temp;
-	line->next = NULL;
-	return (line);
-}
-
-void		ft_listadd_back(t_line **list, t_line *new)
-{
-	t_line		*temp;
-
-	if (!new)
-		return ;
-	if (!*list)
-	{
-		*list = new;
-		new->next = NULL;
-		return ;
-	}
-	temp = *list;
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new;
-}
-
 char		*ft_strjoin(char *s1, char *s2, int size)
 {
 	int		s1len;
 	int		s2len;
 	char 	*str;
 
+	(void)size;
 	if (!s1)
 		s1len = 0;
 	else
