@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 11:34:48 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/15 16:11:41 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/17 15:54:58 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ char		*ft_strjoin(char *s1, char *s2, int size)
 	int		s2len;
 	char 	*str;
 
-	(void)size;
 	if (!s1)
 		s1len = 0;
 	else

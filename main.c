@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:46:03 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/15 16:09:24 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/17 16:39:25 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,9 @@ int		main()
 		return (0);
 	}
 
-	printf("|---------------------------------------------------------|\n");
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	printf("|---------------------------------------------------------|\n");
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	printf("|---------------------------------------------------------|\n");
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	printf("|---------------------------------------------------------|\n");
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	printf("|---------------------------------------------------------|\n");
-	get_next_line(fd, &line);
-	printf("%s\n", line);
+	int value;
+	while ((value = get_next_line(fd, &line)))
+		printf("%s\n", line);
 
 	close (fd);
 	return (0);
