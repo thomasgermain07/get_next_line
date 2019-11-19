@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:31:10 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/18 15:41:52 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/19 12:34:50 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include <stdlib.h>
 # include <string.h>
 
-# define BUFFER_SIZE 1000
+# include <stdio.h>
+
+# define BUFFER_SIZE 20
 
 int					get_next_line(int fd, char **line);
 char				*ft_strdup(char *s1);
@@ -27,6 +29,5 @@ char				*ft_strjoin(char *s1, char *s2);
 size_t				ft_strlen(char *s);
 void				*ft_memset(void *b, int c, size_t len);
 size_t				ft_strlcpy(char *dst, char *src, size_t dstsize);
-
 
 #endif

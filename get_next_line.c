@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 09:50:56 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/18 16:01:29 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/19 16:46:18 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,25 @@ void	*ft_memset(void *b, int c, size_t len)
 	return (b);
 }
 
+char			*ft_refresh_stock(char *stock, int i)
+{
+	char			*temp;
+
+	if (stock[i])
+	{
+		temp = ft_strdup(stock + i + 1);
+ 		free (stock);
+ 		stock = temp;
+	}
+	else
+	{
+		temp = ft_strdup(stock + i);
+		free(stock);
+		stock = temp;
+	}
+	return (stock);
+}
+
 int				get_next_line(int fd, char **line)
 {
 	static char		*stock;
@@ -56,10 +75,11 @@ int				get_next_line(int fd, char **line)
 	int				ret;
 	int				i;
 
-	if (BUFFER_SIZE <= 0 || !line || !(buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+	if (BUFFER_SIZE <= 0 || !line ||
+		!(buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
 	if (!stock)
-		stock = ft_calloc(0,0);
+		stock = ft_calloc(0, 0);
 	while (!ft_strchr(buffer, '\n') && (ret = read(fd, buffer, BUFFER_SIZE)))
 	{
 		buffer[ret] = '\0';
@@ -69,13 +89,10 @@ int				get_next_line(int fd, char **line)
 	while (stock[i] && stock[i] != '\n')
 		i++;
 	*line = ft_substr(stock, 0, i);
-	stock = ft_strdup(stock + i + 1);
+	stock = ft_refresh_stock(stock, i);
 	free(buffer);
-	if (ft_strlen(*line))
+	if (ft_strlen(*line) || stock[0])
 		return (1);
-	else
-	{
-		free(stock);
-		return (0);
-	}
+	free(stock);
+	return (0);
 }

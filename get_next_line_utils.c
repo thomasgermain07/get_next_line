@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 11:34:48 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/18 16:05:32 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/19 16:33:40 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,15 @@ char	*ft_strchr(char *s, int c)
 char	*ft_strdup(char *s1)
 {
 	char *str;
+	int	i;
 
+	i = 0;
 	if (!(str = malloc(sizeof(char) * (ft_strlen(s1) + 1))))
 		return (NULL);
 	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
+	while (str[i])
+		i++;
+	str[i] = '\0';
 	return (str);
 }
 
@@ -87,5 +92,6 @@ char			*ft_strjoin(char *s1, char *s2)
 	ft_strlcpy(str, s1, s1len + 1);
 	ft_strlcpy(str + s1len, s2, s2len + 1);
 	str[s1len + s2len] = '\0';
+	free(s1);
 	return (str);
 }
