@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 09:50:56 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/21 11:40:42 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/21 11:53:11 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char			*ft_refresh_stock(char *stock, int i)
 
 int				get_next_line(int fd, char **line)
 {
-	static char		*stock;
+	static char		*stock[10240];
 	char			*buffer;
 	int				ret;
 	int				i;
@@ -78,21 +78,21 @@ int				get_next_line(int fd, char **line)
 	if (BUFFER_SIZE <= 0 || !line || fd < 0 || fd > 10240 ||
 		!(buffer = (char *)ft_calloc(sizeof(char), (BUFFER_SIZE + 1))))
 		return (-1);
-	if (!stock)
-		stock = ft_calloc(0, 0);
+	if (!stock[fd])
+		stock[fd] = ft_calloc(0, 0);
 	while (!ft_strchr(buffer, '\n') && (ret = read(fd, buffer, BUFFER_SIZE)))
 	{
 		buffer[ret] = '\0';
-		stock = ft_strjoin(stock, buffer);
+		stock[fd] = ft_strjoin(stock[fd], buffer);
 	}
 	i = 0;
-	while (stock[i] && stock[i] != '\n')
+	while (stock[fd][i] && stock[fd][i] != '\n')
 		i++;
-	*line = ft_substr(stock, 0, i);
-	stock = ft_refresh_stock(stock, i);
+	*line = ft_substr(stock[fd], 0, i);
+	stock[fd] = ft_refresh_stock(stock[fd], i);
 	free(buffer);
-	if (!(!ret && !stock[0]))
+	if (!(!ret && !stock[fd][0]))
 		return (1);
-	free(stock);
+	free(stock[fd]);
 	return (0);
 }
