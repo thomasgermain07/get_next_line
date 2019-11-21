@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomasgermain <thomasgermain@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:46:03 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/20 14:18:06 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/21 22:00:05 by thomasgerma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ int main(int ac, char **av)
 		printf("-----------\nError\n");
 	else if (ret == 0)
 		printf("-----------\nEnd of file\n");
+	if (buff)
+		free(buff);
 	return (0);
 }

@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomasgermain <thomasgermain@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 11:34:48 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/20 14:30:52 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/21 21:48:43 by thomasgerma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t			ft_strlen(char *s)
+{
+	size_t		size;
+
+	size = 0;
+	while (s[size])
+		size++;
+	return (size);
+}
 
 size_t			ft_strlcpy(char *dst, char *src, size_t dstsize)
 {
@@ -37,18 +47,6 @@ size_t			ft_strlcpy(char *dst, char *src, size_t dstsize)
 	return (i);
 }
 
-void			*ft_calloc(size_t count, size_t size)
-{
-	void *temp;
-
-	if (!(temp = malloc(count * size)))
-		return (NULL);
-	if (!count || !size)
-		return (temp);
-	ft_memset(temp, 0, size * count);
-	return (temp);
-}
-
 char			*ft_strchr(char *s, int c)
 {
 	if (!s[0] || !c)
@@ -68,7 +66,7 @@ char			*ft_strdup(char *s1)
 	int			i;
 
 	i = 0;
-	if (!(str = malloc(sizeof(char) * (ft_strlen(s1) + 1))))
+	if (!(str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1))))
 		return (NULL);
 	ft_strlcpy(str, s1, ft_strlen(s1) + 1);
 	while (str[i])
