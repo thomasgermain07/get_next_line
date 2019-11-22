@@ -3,22 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomasgermain <thomasgermain@student.42    +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 09:50:56 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/21 21:54:17 by thomasgerma      ###   ########.fr       */
+/*   Updated: 2019/11/22 14:57:46 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void			*ft_calloc(size_t count, size_t size)
+{
+	void	*temp;
+	size_t	i;
+
+	i = -1;
+	if (!(temp = malloc(count * size)))
+		return (NULL);
+	if (!count || !size)
+		return (temp);
+	while (++i < count * size)
+		((unsigned char *)temp)[i] = '\0';
+	return (temp);
+}
 
 char			*ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*sub;
 
 	if (!s || (start + len > ft_strlen(s)))
-		return (sub = (char *)malloc(sizeof(char)));
-	if (!(sub = (char *)malloc(sizeof(char) * (len + 1))))
+		return (sub = (char *)ft_calloc(sizeof(char), 1));
+	if (!(sub = (char *)ft_calloc(sizeof(char), (len + 1))))
 		return (NULL);
 	s = s + start;
 	ft_strlcpy(sub, s, len + 1);
@@ -38,27 +53,27 @@ char			*ft_refresh_stock(char *stock, int i)
 	}
 	else
 	{
-		temp = ft_strdup(stock + i);
 		free(stock);
-		stock = temp;
+		stock = NULL;
 	}
 	return (stock);
 }
 
 int				ft_exit(int ret, char **buffer, char **stock)
 {
-	if (ret == 0)
+	if (ret >= 0 && (*buffer || *stock))
 	{
-		if (*stock)
-		{
+		if (*buffer)
+			free(*buffer);
+		if (ret == 0 && *stock)
 			free(*stock);
-			*stock = NULL;
-		}
 	}
-	if (ret >= 0 && *buffer)
+	if (ret == -1)
 	{
-		free(*buffer);
-		*buffer = NULL;
+		if (!*buffer)
+			free(*buffer);
+		if (*stock)
+			free(*stock);
 	}
 	return (ret);
 }
@@ -71,12 +86,14 @@ int				get_next_line(int fd, char **line)
 	int				i;
 
 	if (BUFFER_SIZE <= 0 || !line || fd < 0 || fd > 1024 ||
-		!(buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+		!(buffer = (char *)ft_calloc(sizeof(char), (BUFFER_SIZE + 1))))
 		return (ft_exit(-1, &buffer, &stock[fd]));
 	if (!stock[fd])
-		stock[fd] = malloc(sizeof(char));
+		stock[fd] = (char *)ft_calloc(sizeof(char), 1);
 	while (!ft_strchr(buffer, '\n') && (ret = read(fd, buffer, BUFFER_SIZE)))
 	{
+		if (ret == -1)
+			return (ft_exit(-1, &buffer, &stock[fd]));
 		buffer[ret] = '\0';
 		stock[fd] = ft_strjoin(stock[fd], buffer);
 	}
@@ -85,7 +102,7 @@ int				get_next_line(int fd, char **line)
 		i++;
 	*line = ft_substr(stock[fd], 0, i);
 	stock[fd] = ft_refresh_stock(stock[fd], i);
-	if (ret || stock[fd][0])
+	if (ret || stock[fd])
 		return (ft_exit(1, &buffer, &stock[fd]));
 	return (ft_exit(0, &buffer, &stock[fd]));
 }

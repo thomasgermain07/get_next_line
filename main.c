@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:46:03 by thgermai          #+#    #+#             */
-/*   Updated: 2019/11/22 13:52:28 by thgermai         ###   ########.fr       */
+/*   Updated: 2019/11/22 14:55:19 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int main(int ac, char **av)
 	while ((ret = get_next_line(fd, &buff)) > 0)
 	{
 		printf("[Return: %d] Line #%d: %s\n", ret, ++line, buff);
-		free(buff);
+		if (buff)
+			free(buff);
 	}
 	printf("[Return: %d] Line #%d: %s\n", ret, ++line, buff);
 	if (ret == -1)
